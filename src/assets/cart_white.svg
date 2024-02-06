@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 576 512"
+   version="1.1"
+   id="svg826"
+   sodipodi:docname="cart_white.svg"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs830" />
+  <sodipodi:namedview
+     id="namedview828"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.99298786"
+     inkscape:cx="378.15165"
+     inkscape:cy="363.54926"
+     inkscape:window-width="1792"
+     inkscape:window-height="1120"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg826" />
+  <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+  <path
+     d="m 142.77887,140 c 0,-6.65 5.35,-12 12,-12 h 22.75 c 11,0 20.75,6.4 25.3,16 h 205.5 c 13.15,0 22.75,12.5 19.3,25.2 l -20.5,76.15 c -4.25,15.7 -18.5,26.65 -34.75,26.65 h -144.25 l 2.7,14.25 c 1.1,5.65 6.05,9.75 11.8,9.75 h 144.15 c 6.65,0 12,5.35 12,12 0,6.65 -5.35,12 -12,12 h -144.15 c -17.3,0 -32.15,-12.3 -35.35,-29.25 l -25.8,-135.5 c -0.35,-1.9 -2,-3.25 -3.95,-3.25 h -22.75 c -6.65,0 -12,-5.35 -12,-12 z m 64,220 a 24,24 0 1 1 48,0 24,24 0 1 1 -48,0 z m 168,-24 a 24,24 0 1 1 0,48 24,24 0 1 1 0,-48 z"
+     id="path824"
+     style="fill:#ffffff;stroke-width:0.5" />
+</svg>
