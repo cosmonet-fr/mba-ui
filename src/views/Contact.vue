@@ -65,6 +65,8 @@ const sendContactForm = () => {
                 <option value="Partnership Inquiry">Partnership Inquiry</option>
                 <option value="Press Contact">Press Contact</option>
                 <option value="I want to delete my account">I want to delete my account</option>
+                <option value="I want to report copyright infringement">I want to report copyright infringement</option>
+                <option value="I want to report a violation of the terms of use. (incitement to violence, racism, etc.)">I want to report a violation of the terms of use. (incitement to violence, racism, etc.)</option>
                 <option value="Other">Other</option>
             </select>
 

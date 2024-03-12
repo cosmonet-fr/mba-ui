@@ -14,7 +14,7 @@
             <p>Now Loading ...</p>
         </div>
         <div class="bottomLoading" >
-            <p>Alpha 2 version</p>
+            <p>Alpha 3 version</p>
         </div>
 
     </div>
@@ -40,7 +40,7 @@ h2 {
     // background: #28272d;
     // background: #176baf;
     // background: linear-gradient(#8b48bb, #8162b9); // Color for Alpha 1
-    background: linear-gradient(#2196F3, #007FE3); // Color for Alpha 2
+    background: linear-gradient(#aaf255, #09af00); // Color for Alpha 2
     display: flex;
     flex-direction: column;
     justify-content: space-between;

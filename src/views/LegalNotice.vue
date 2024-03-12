@@ -71,7 +71,7 @@ fetch(`${import.meta.env.VITE_HOST_API}`)
         <div class="item" >
             <h2>APP / UI infos</h2>
             <ul>
-                <li>version: <span @click="redpill ++" >0.1.0A-2</span> </li>
+                <li>version: <span @click="redpill ++" >0.1.0A-3</span> </li>
                 <li> <a href="https://github.com/cosmonet-fr/mba-ui/">source code</a> </li>
             </ul>
         </div>

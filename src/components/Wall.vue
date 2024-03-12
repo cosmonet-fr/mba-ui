@@ -47,6 +47,10 @@ function isPixelInCart(pixelId) {
 }
 
 function getBackgroundColor(pixel) {
+  //Loc => #6aa8f8
+  if (pixel.forRent) {
+    return '#FF69B4';
+  }
   if (pixel.transactionInProgress) {
     return '#FDD835';
   }
@@ -72,7 +76,7 @@ function getBackgroundColor(pixel) {
       <div class="pixels nopic" v-for="pixel in pixelsStore.pixels" :key="pixel.numbers"
         :class="{ added: isPixelInCart(pixel.numbers) }" :style="{ background: getBackgroundColor(pixel) }"
         @click="selectPix(pixel)">
-        <img v-if="pixel.icons !== null" :src="pixel.icons" :alt="pixel.numbers">
+        <img v-if="pixel.icons !== null && !pixel.forSale && !pixel.forRent" :src="pixel.icons" :alt="pixel.numbers">
         <!-- <img v-else src="@/assets/cadre.webp" alt="cadre"> -->
         <img v-else class="dotted" src="@/assets/dotted.svg" alt="cadre">
       </div>
