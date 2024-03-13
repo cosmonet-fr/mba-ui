@@ -43,6 +43,8 @@ onMounted(() => {
 function getBackgroundColor(pixel) {
     if (pixel.transactionInProgress) {
         return '#FDD835';
+    } else if (pixel.forRent) {
+        return '#FF69B4'
     } else if (pixel.forSale) {
         return '#2196F3';
     } else {

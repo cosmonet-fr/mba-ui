@@ -62,13 +62,27 @@ const stateChecker = (sale, rent) => {
 
 // Fonction pour gérer la mise à jour
 const update = () => {
+    let forSale
+    let forRent
+    if (state.value === 'forSale') {
+        forSale = 1;
+        forRent = 0;
+    } else if (state.value === 'forRent') {
+        forSale = 0;
+        forRent = 1; 
+    } else {
+        forSale = 0;
+        forRent = 0; 
+    }
     const formData = new FormData();
 
     // Ajouter les champs, sauf s'ils sont null
     if (price.value !== null) formData.append("newPrice", price.value);
-    formData.append("forSale", forSale.value ? 1 : 0);
+    formData.append("forSale", forSale);
+    formData.append("forRent", forRent);
     if (url.value !== null) formData.append("newUrl", url.value);
     if (btcAdress.value !== null) formData.append("btc", btcAdress.value);
+    if (btcRent.value !== null) formData.append("btcRent", btcRent.value);
 
     // Gérer l'ajout de l'image
     if (selectedFile.value) {
