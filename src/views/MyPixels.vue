@@ -53,6 +53,12 @@ function getBackgroundColor(pixel) {
     }
 }
 
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
+
 authStore.authChecker();
 </script>
 
@@ -60,14 +66,24 @@ authStore.authChecker();
     <NavMyAccount></NavMyAccount>
     <div class="page">
         <div v-if="myData.length > 0" >
-            <div class="item" v-for="item in myData" :key="item.numbers">
-                <div class="icon" :style="{background: getBackgroundColor(item)}">
-                    <img :src="item.icons" :alt="item.numbers" v-if="item.icons">
+            <div class="item-box" v-for="item in myData" :key="item.numbers">
+                <div class="item">
+                    <div class="date"  >
+                    </div>
+                    <div class="icon" :style="{background: getBackgroundColor(item)}">
+                        <img :src="item.icons" :alt="item.numbers || item.pixelId  " v-if="item.icons">
+                    </div>
+                    <div>
+                        <p>number: {{ item.numbers || item.pixelId }}</p>
+                    </div>
+                    <RouterLink :to="`/my-pixels/${item.numbers  }`" class="myMenu" v-if="item.pixel_id">
+                        <button>Edit</button>
+                    </RouterLink>
+                    <RouterLink :to="`/my-pixels/${item.numbers  }`" class="myMenu" v-else>
+                        <button>000</button>
+                    </RouterLink>
                 </div>
-                <p>number: {{ item.numbers }}</p>
-                <RouterLink :to="`/my-pixels/${item.numbers}`" class="myMenu">
-                    <button>Edit</button>
-                </RouterLink>
+                <p class="text-loc" v-if="item.pixelId">You have this pixel for rent until {{ formatDate(item.end) }}</p>
             </div>
         </div>
         <div v-else >
@@ -77,14 +93,16 @@ authStore.authChecker();
 </template>
 
 <style scoped lang="scss" >
+.item-box {
+    background-color: #1f1e24;
 
+}
 .item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
     margin: .5em 0;
-    background-color: #1f1e24;
 }
 .icon {
     display: flex;
@@ -100,6 +118,13 @@ button {
     //height: 32px;
     font-size: 1rem;
     margin: 0!important;
+}
+.text-loc{
+    padding: 3px;
+    font-size: .8em;
+    text-align: center;
+    background-color: #FF69B4;
+
 }
 
 </style>
