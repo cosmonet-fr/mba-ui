@@ -79,8 +79,8 @@ authStore.authChecker();
                     <RouterLink :to="`/my-pixels/${item.numbers  }`" class="myMenu" v-if="item.pixel_id">
                         <button>Edit</button>
                     </RouterLink>
-                    <RouterLink :to="`/my-pixels/${item.numbers  }`" class="myMenu" v-else>
-                        <button>000</button>
+                    <RouterLink :to="`/my-pixels/rent/${item.pixelId  }`" class="myMenu" v-else>
+                        <button>Edit</button>
                     </RouterLink>
                 </div>
                 <p class="text-loc" v-if="item.pixelId">You have this pixel for rent until {{ formatDate(item.end) }}</p>
