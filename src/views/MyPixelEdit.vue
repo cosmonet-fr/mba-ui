@@ -31,7 +31,7 @@ if (token) {
         Authorization: `Bearer ${token}`
     };
 
-    fetch(`${import.meta.env.VITE_HOST_API}/wall/${idUser}/${route.params.pixelId}`, { headers })
+    fetch(`${import.meta.env.VITE_HOST_API}/wall/owner/${idUser}/${route.params.pixelId}`, { headers })
         .then(response => response.json())
         .then(data => {
             myData.value = data;

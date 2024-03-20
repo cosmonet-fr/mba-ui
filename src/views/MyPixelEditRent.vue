@@ -30,22 +30,21 @@ if (token) {
     const headers = {
         Authorization: `Bearer ${token}`
     };
-//// IL FAUDRA GERER LA RECUP DE DATA
-    // fetch(`${import.meta.env.VITE_HOST_API}/wall/${idUser}/${route.params.pixelId}`, { headers }) 
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         myData.value = data;
-    //         url.value = data.urls;
-    //         price.value = data.prices;
-    //         btcAdress.value = data.btc;
-    //         btcRent.value = data.btcRent;
+    fetch(`${import.meta.env.VITE_HOST_API}/wall/pub/${route.params.id}`, { headers }) 
+        .then(response => response.json())
+        .then(data => {
+            myData.value = data;
+            url.value = data.urls;
+            price.value = data.prices;
+            btcAdress.value = data.btc;
+            btcRent.value = data.btcRent;
 
-    //         // Ici, nous appelons stateChecker avec les bonnes valeurs directement après avoir mis à jour les autres valeurs.
-    //         stateChecker(data.forSale, data.forRent);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching user:', error);
-    //     });
+            // Ici, nous appelons stateChecker avec les bonnes valeurs directement après avoir mis à jour les autres valeurs.
+            stateChecker(data.forSale, data.forRent);
+        })
+        .catch(error => {
+            console.error('Error fetching user:', error);
+        });
 }
 
 // Fonction pour vérifier l'état du pixel
