@@ -11,6 +11,7 @@ import MySales from '../views/MySales.vue'
 import MyShoppingList from '../views/MyShoppingList.vue'
 import Buy from '../views/Buy.vue'
 import BannerEdit from '../views/BannerEdit.vue'
+import RentThis from '../views/RentThis.vue'
 import MyPixelEditRent from '../views/MyPixelEditRent.vue'
 import Contact from '../views/Contact.vue'
 import LegalNotice from '../views/LegalNotice.vue'
@@ -91,6 +92,12 @@ const router = createRouter({
       path: '/banner/edit/:idBanner',
       name: 'banner-edit',
       component: BannerEdit
+
+    },
+    {
+      path: '/rent/:pixelId',
+      name: 'rent',
+      component: RentThis
 
     },
     {

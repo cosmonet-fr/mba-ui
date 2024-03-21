@@ -3,6 +3,8 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { usePixelsStore } from '@/stores/pixelsStore';
 import { useCartStore } from '@/stores/cart';
 import LoadingMore from '@/components/LoadingMore.vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const pixelsStore = usePixelsStore();
 const cartStore = useCartStore();
@@ -32,10 +34,14 @@ function selectPix(pixel) {
   } else {
     if (pixel.forSale == 1 && pixel.urls != null) {
       cartStore.addToCart(pixel);
-    } else if (pixel.forSale == 1 && pixel.urls == null) {
+    } else if (pixel.forSale == 1 && pixel.urls == null && !pixel.forRent) {
       cartStore.addToCart(pixel);
-    } else if (pixel.forSale == 0 && pixel.urls != null) {
+    } else if (pixel.forSale == 0 && pixel.urls != null && !pixel.forRent) {
       window.location.href = pixel.urls;
+    } else if (pixel.forSale == 1 && pixel.urls == null && pixel.forRent) {
+      router.push(`/rent/${pixel.numbers}`)
+    } else if (pixel.forSale == 0 && pixel.urls != null && pixel.forRent) {
+      router.push(`/rent/${pixel.numbers}`)
     } else {
       alert('Sorry, this pixel is not for sale.');
     }
@@ -76,7 +82,7 @@ function getBackgroundColor(pixel) {
       <div class="pixels nopic" v-for="pixel in pixelsStore.pixels" :key="pixel.numbers"
         :class="{ added: isPixelInCart(pixel.numbers) }" :style="{ background: getBackgroundColor(pixel) }"
         @click="selectPix(pixel)">
-        <img v-if="pixel.icons !== null && !pixel.forSale && !pixel.forRent" :src="pixel.icons" :alt="pixel.numbers">
+        <img v-if="pixel.icons !== null" :src="pixel.icons" :alt="pixel.numbers">
         <!-- <img v-else src="@/assets/cadre.webp" alt="cadre"> -->
         <img v-else class="dotted" src="@/assets/dotted.svg" alt="cadre">
       </div>
