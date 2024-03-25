@@ -4,6 +4,7 @@ import router from '../router'
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
+const idUser = sessionStorage.getItem('id')
 const beginningDate = ref(null);
 const beginningTime = ref('00:00');
 const endDate = ref(null);
@@ -16,7 +17,7 @@ const validate = () => {
     console.log(end)
     console.log(route.params.pixelId)
 
-    fetch(`${import.meta.env.VITE_HOST_API}/loc/47/${route.params.pixelId}`, {
+    fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}/${route.params.pixelId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
