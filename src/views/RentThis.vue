@@ -1,7 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue';
+import router from '../router'
+import { useRoute } from 'vue-router';
 import { DatePicker } from 'v-calendar';
-import { addDays, formatISO } from 'date-fns';
+import { formatISO, setHours, setMinutes, addDays } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+
+const route = useRoute();
+
 
 const minDate = new Date();
 const maxDate = addDays(new Date(), 90);
@@ -23,26 +29,61 @@ const attributes = computed(() => [
     },
 ]);
 
+const idUser = sessionStorage.getItem('id')
 const beginningDate = ref(null);
 const beginningTime = ref('00:00');
 const endDate = ref(null);
 const endTime = ref('23:59');
+const timeZone = 'UTC';
 
 const validate = () => {
-    const beginning = `${beginningDate.value}T${beginningTime.value}:00.000Z`
-    const end = `${endDate.value}T${endTime.value}:00.000Z`
+    if (beginningDate.value && beginningTime.value && endDate.value && endTime.value) {
+        try {
+            // Parsez les valeurs de date en objets Date
+            const parsedBeginningDate = new Date(beginningDate.value);
+            const parsedEndDate = new Date(endDate.value);
 
-    fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}/${route.params.pixelId}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "beginning": beginning,
-            "end": end
-        })
-    })
-}
+            // Ajoutez le temps à vos objets Date
+            const [beginningHours, beginningMinutes] = beginningTime.value.split(':');
+            parsedBeginningDate.setHours(parseInt(beginningHours), parseInt(beginningMinutes), 0, 0);
+
+            const [endHours, endMinutes] = endTime.value.split(':');
+            parsedEndDate.setHours(parseInt(endHours), parseInt(endMinutes), 0, 0);
+
+            // Convertissez les dates au format ISO UTC
+            const formattedBeginningDate = parsedBeginningDate.toISOString();
+            const formattedEndDate = parsedEndDate.toISOString();
+
+            if (!idUser) {
+                console.error("ID utilisateur manquant.");
+                return;
+            }
+
+            const payload = {
+                beginning: formattedBeginningDate,
+                end: formattedEndDate,
+            };
+
+            fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}/${route.params.pixelId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        } catch (error) {
+            console.error("Erreur lors de la manipulation des dates:", error);
+        }
+    } else {
+        console.log("Une ou plusieurs valeurs de date/heure sont manquantes.");
+    }
+};
+
+
+
+
 
 </script>
 
@@ -50,7 +91,10 @@ const validate = () => {
     <div class="page">
         <h1>Rent a plot</h1>
         <p>
-            {{ beginningDate }}
+{{ beginningDate }}
+        </p>
+        <p>
+{{ endDate }}
         </p>
         <form @submit.prevent="validate">
             <div class="item">
