@@ -1,13 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
-import router from '../router'
+import router from '../router';
 import { useRoute } from 'vue-router';
 import { DatePicker } from 'v-calendar';
 import { formatISO, setHours, setMinutes, addDays } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
 
 const route = useRoute();
-
 
 const minDate = new Date();
 const maxDate = addDays(new Date(), 90);
@@ -29,19 +27,18 @@ const attributes = computed(() => [
     },
 ]);
 
-const idUser = sessionStorage.getItem('id')
-const beginningDate = ref(null);
+const idUser = sessionStorage.getItem('id');
+// Mettre à jour pour utiliser une seule référence pour la plage de dates
+const dateRange = ref({ start: null, end: null });
 const beginningTime = ref('00:00');
-const endDate = ref(null);
 const endTime = ref('23:59');
-const timeZone = 'UTC';
 
 const validate = () => {
-    if (beginningDate.value && beginningTime.value && endDate.value && endTime.value) {
+    if (dateRange.value.start && beginningTime.value && dateRange.value.end && endTime.value) {
         try {
             // Parsez les valeurs de date en objets Date
-            const parsedBeginningDate = new Date(beginningDate.value);
-            const parsedEndDate = new Date(endDate.value);
+            const parsedBeginningDate = new Date(dateRange.value.start);
+            const parsedEndDate = new Date(dateRange.value.end);
 
             // Ajoutez le temps à vos objets Date
             const [beginningHours, beginningMinutes] = beginningTime.value.split(':');
@@ -50,18 +47,14 @@ const validate = () => {
             const [endHours, endMinutes] = endTime.value.split(':');
             parsedEndDate.setHours(parseInt(endHours), parseInt(endMinutes), 0, 0);
 
-            // Convertissez les dates au format ISO UTC
-            const formattedBeginningDate = parsedBeginningDate.toISOString();
-            const formattedEndDate = parsedEndDate.toISOString();
-
             if (!idUser) {
                 console.error("ID utilisateur manquant.");
                 return;
             }
 
             const payload = {
-                beginning: formattedBeginningDate,
-                end: formattedEndDate,
+                beginning: parsedBeginningDate.toISOString(),
+                end: parsedEndDate.toISOString(),
             };
 
             fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}/${route.params.pixelId}`, {
@@ -80,36 +73,28 @@ const validate = () => {
         console.log("Une ou plusieurs valeurs de date/heure sont manquantes.");
     }
 };
-
-
-
-
-
 </script>
 
 <template>
     <div class="page">
         <h1>Rent a plot</h1>
-        <p>
-{{ beginningDate }}
-        </p>
-        <p>
-{{ endDate }}
-        </p>
         <form @submit.prevent="validate">
             <div class="item">
-                <h2>Start date and time</h2>
-                <DatePicker transparent borderless is-dark="{ selector: ':root', darkClass: 'dark' }" v-model="beginningDate" :min-date="minDate" :max-date="maxDate" :attributes="attributes" />
+                <h2>Select the rental period</h2>
+                <!-- Configurer pour la sélection de la plage de dates -->
+                <DatePicker transparent borderless is-dark="{ selector: ':root', darkClass: 'dark' }"
+                    v-model="dateRange" :min-date="minDate" :max-date="maxDate" :attributes="attributes" is-range />
+            </div>
+            <div class="item">
+                <h2>Start time</h2>
                 <input type="time" required v-model="beginningTime" />
             </div>
             <div class="item">
-                <h2>End date and time</h2>
-                <DatePicker transparent borderless is-dark="{ selector: ':root', darkClass: 'dark' }" v-model="endDate" :min-date="minDate" :max-date="maxDate" :attributes="attributes" />
+                <h2>End time</h2>
                 <input type="time" required v-model="endTime" />
             </div>
             <input type="submit" value="Validate the rental" />
         </form>
-        <p v-if="errorMsg">{{ errorMsg }}</p>
     </div>
 </template>
 
