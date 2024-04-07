@@ -1,9 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, resolveDirective } from 'vue';
 import router from '../router';
 import { useRoute } from 'vue-router';
 import { DatePicker } from 'v-calendar';
 import { formatISO, setHours, setMinutes, addDays } from 'date-fns';
+import { useAuthStore } from '@/stores/auth';
+const authStore = useAuthStore();
+authStore.authChecker();
 
 const route = useRoute();
 
@@ -11,15 +14,13 @@ const minDate = new Date();
 const maxDate = addDays(new Date(), 90);
 
 // Exemple de dates déjà réservées
-const reservedDates = ['2024-04-15', '2024-04-16', '2024-05-01'];
+const reservedDates = [{ start: new Date(2024, 4, 14), end: new Date(2024, 4, 18) }, { start: new Date(2024, 4, 20), end: new Date(2024, 4, 21) }];
 
 const attributes = computed(() => [
     {
         key: 'reserved',
         dates: reservedDates,
-        highlight: {
-            backgroundColor: '#ff6961',
-        },
+        highlight: 'red',
         popover: {
             label: 'Reserved',
         },

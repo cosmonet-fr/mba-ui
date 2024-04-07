@@ -32,7 +32,7 @@ function selectPix(pixel) {
   if (pixel.transactionInProgress == 1) {
     alert('A transaction is already in progress. Choose another pixel');
   } else {
-    if (pixel.forSale == 1 && pixel.urls != null) {
+    if (pixel.forSale == 1) {
       cartStore.addToCart(pixel);
     } else if (pixel.forSale == 1 && pixel.urls == null && !pixel.forRent) {
       cartStore.addToCart(pixel);
