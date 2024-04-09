@@ -104,14 +104,16 @@ const update = () => {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error("Failed to connect to server, server response: " + response.status);
+                return response.json().then(err => {
+                    throw new Error(err.message);
+                });
             }
         })
         .then(data => {
             message.value = "Update successful!";
         })
         .catch(error => {
-            console.error(error);
+            console.error(error.message);
             message.value = "Update failed: " + error.message;
         });
 };

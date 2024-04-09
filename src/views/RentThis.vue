@@ -1,25 +1,48 @@
 <script setup>
-import { ref, computed, resolveDirective } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useRoute } from 'vue-router';
 import { DatePicker } from 'v-calendar';
-import { formatISO, setHours, setMinutes, addDays } from 'date-fns';
+import { formatISO, parseISO } from 'date-fns';
 import { useAuthStore } from '@/stores/auth';
+
 const authStore = useAuthStore();
 authStore.authChecker();
 
 const route = useRoute();
-
 const minDate = new Date();
-const maxDate = addDays(new Date(), 90);
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 90);
 
-// Exemple de dates déjà réservées
-const reservedDates = [{ start: new Date(2024, 4, 14), end: new Date(2024, 4, 18) }, { start: new Date(2024, 4, 20), end: new Date(2024, 4, 21) }];
+const reservedDates = ref([]);
+
+// Conversion des dates de l'API au format requis
+const convertDatesFromAPI = (dates) => {
+    return dates.map(date => ({
+        start: parseISO(date.beginning),
+        end: parseISO(date.end)
+    }));
+};
+
+// Récupération des dates réservées depuis l'API
+const fetchReservedDates = async () => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_HOST_API}/loc/pixel/${route.params.pixelId}`);
+        const data = await response.json();
+        reservedDates.value = convertDatesFromAPI(data);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des dates réservées:", error);
+    }
+};
+
+onMounted(() => {
+    fetchReservedDates();
+});
 
 const attributes = computed(() => [
     {
         key: 'reserved',
-        dates: reservedDates,
+        dates: reservedDates.value,
         highlight: 'red',
         popover: {
             label: 'Reserved',
