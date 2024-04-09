@@ -24,6 +24,9 @@ const convertDatesFromAPI = (dates) => {
     }));
 };
 
+
+const message = ref('');
+
 // Récupération des dates réservées depuis l'API
 const fetchReservedDates = async () => {
     try {
@@ -88,8 +91,8 @@ const validate = () => {
                 },
                 body: JSON.stringify(payload)
             }).then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
+                .then(data => message.value = data.message)
+                .catch(error => message.value = error.message);
         } catch (error) {
             console.error("Erreur lors de la manipulation des dates:", error);
         }
@@ -119,6 +122,7 @@ const validate = () => {
             </div>
             <input type="submit" value="Validate the rental" />
         </form>
+        <div v-if="message" class="api-message">{{ message }}</div>
     </div>
 </template>
 
