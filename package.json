@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/vue-splide": "^0.6.12",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.1",
     "pinia": "^2.1.3",
