@@ -58,6 +58,10 @@ const confirmOrCanceled = async (option, id, index) => {
     }
 };
 
+const check = (address) => {
+    window.open(`https://live.blockcypher.com/btc/address/${address}`, '_blank');
+};
+
 authStore.authChecker();
 </script>
 
@@ -74,6 +78,9 @@ authStore.authChecker();
                     <p>Date : {{ formatDate(item.createdAt) }}</p>
                     <p>Price : {{ item.amountExpected }} S</p>
                     <p>Address : {{ item.btcAddress }}</p>
+                    <button @click="check(item.btcAddress)">
+                        Verify transaction on blockcypher
+                    </button>
                     <!-- Afficher les boutons uniquement si la transaction est en attente -->
                     <button v-if="!item.apiResponse" @click="confirmOrCanceled('confirm', item.id, index)">Confirm the
                         transaction</button>
