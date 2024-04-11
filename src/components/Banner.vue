@@ -47,7 +47,7 @@ onMounted(() => {
                     <BannerPic :url="banners[1].banner" :link="banners[1].link" />
                 </div>
                 <div class="else" v-else>
-                    <h2>Buy your pixel plots !</h2>
+                    <h3>Buy your pixel plots !</h3>
                     <RouterLink :to="{
                         name: 'buy',
                         params: {
@@ -63,7 +63,7 @@ onMounted(() => {
                     <BannerPic :url="banners[2].banner" :link="banners[2].link" />
                 </div>
                 <div class="else" v-else>
-                    <h2>Communicate with your image and your link !</h2>
+                    <h3>Communicate with your image and your link !</h3>
                     <RouterLink :to="{
                         name: 'buy',
                         params: {
@@ -79,7 +79,7 @@ onMounted(() => {
                     <BannerPic :url="banners[3].banner" :link="banners[3].link" />
                 </div>
                 <div class="else" v-else>
-                    <h2>And resell your plot on the secondary market at the price of your choice !</h2>
+                    <h3>And resell your plot on the secondary market at the price of your choice !</h3>
                     <RouterLink :to="{
                         name: 'buy',
                         params: {
@@ -103,6 +103,10 @@ h2 {
     @media (min-width: 600px) {
         font-size: 2rem;
     }
+}
+h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .bannerContainer {
