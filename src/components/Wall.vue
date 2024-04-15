@@ -9,6 +9,8 @@ const router = useRouter();
 const pixelsStore = usePixelsStore();
 const cartStore = useCartStore();
 const loadingMoreRef = ref(null);
+const showRentModal = ref(false);
+const modalPixel = ref(null)
 
 const handleScroll = () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -38,14 +40,30 @@ function selectPix(pixel) {
       cartStore.addToCart(pixel);
     } else if (pixel.forSale == 0 && pixel.urls != null && !pixel.forRent) {
       window.location.href = pixel.urls;
-    } else if (pixel.forSale == 1 && pixel.urls == null && pixel.forRent) {
+    } else if (pixel.forSale == 0 && pixel.urls == null && pixel.forRent) {
       router.push(`/rent/${pixel.numbers}`)
     } else if (pixel.forSale == 0 && pixel.urls != null && pixel.forRent) {
-      router.push(`/rent/${pixel.numbers}`)
+      // Modal
+      getChois(pixel)
     } else {
       alert('Sorry, this pixel is not for sale.');
     }
   }
+}
+
+function getChois(pixel) {
+  showRentModal.value = true
+  modalPixel.value = pixel
+}
+
+function rentPlot() {
+  router.push(`/rent/${modalPixel.value.numbers}`);
+  showModal.value = false;
+}
+
+function visitLink() {
+  window.location.href = modalPixel.value.urls;
+  showModal.value = false;
 }
 
 function isPixelInCart(pixelId) {
@@ -77,6 +95,20 @@ function getBackgroundColor(pixel) {
 </script>
 
 <template>
+  <div class="modal_contenaire" v-if="showRentModal" @click="showRentModal = false">
+    <div class="modal">
+      <h1>
+        What do you want to do ?
+      </h1>
+      <p>
+        This parcel of pixels is for rent and offers a hyperlink. What do you want to do ?
+      </p>
+      <div class="dashModal" >
+        <button @click="visitLink">Visit the link</button>
+        <button @click="rentPlot">Rent the plot</button>
+      </div>
+    </div>
+  </div>
   <div class="wallContainer">
     <div class="wall">
       <div class="pixels nopic" v-for="pixel in pixelsStore.pixels" :key="pixel.numbers"
@@ -108,6 +140,15 @@ function getBackgroundColor(pixel) {
   height: 7.67vw;
   max-width: 64px;
   max-height: 64px;
+}
+
+.dashModal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  button {
+    font-size: 1rem;
+  }
 }
 
 
