@@ -73,7 +73,7 @@ authStore.authChecker();
             <h2>Current sales:</h2>
             <div v-for="(item, index) in myData" :key="index">
                 <div class="current" v-if="item.status === 0">
-                    <p>Pixel N° {{ item.pixelId }}</p>
+                    <p>Pixels N° / <span v-for="id in item.pixelId">{{id}} / </span></p>
                     <p>ID : {{ item.id }}</p>
                     <p>Date : {{ formatDate(item.createdAt) }}</p>
                     <p>Price : {{ item.amountExpected }} S</p>
