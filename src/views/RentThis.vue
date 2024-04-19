@@ -18,12 +18,12 @@ const reservedDates = ref([]);
 
 // Conversion des dates de l'API au format requis
 const convertDatesFromAPI = (dates) => {
-    return dates.map(date => ({
-        start: parseISO(date.beginning),
-        end: parseISO(date.end)
-    }));
+    return dates.filter(date => date.status !== 1)  // Filtrer les dates où status !== 1
+        .map(date => ({
+            start: parseISO(date.beginning),
+            end: parseISO(date.end)
+        }));
 };
-
 
 const message = ref('');
 
@@ -55,7 +55,6 @@ const attributes = computed(() => [
 ]);
 
 const idUser = sessionStorage.getItem('id');
-// Mettre à jour pour utiliser une seule référence pour la plage de dates
 const dateRange = ref({ start: null, end: null });
 const beginningTime = ref('00:00');
 const endTime = ref('23:59');
@@ -63,14 +62,10 @@ const endTime = ref('23:59');
 const validate = () => {
     if (dateRange.value.start && beginningTime.value && dateRange.value.end && endTime.value) {
         try {
-            // Parsez les valeurs de date en objets Date
             const parsedBeginningDate = new Date(dateRange.value.start);
             const parsedEndDate = new Date(dateRange.value.end);
-
-            // Ajoutez le temps à vos objets Date
             const [beginningHours, beginningMinutes] = beginningTime.value.split(':');
             parsedBeginningDate.setHours(parseInt(beginningHours), parseInt(beginningMinutes), 0, 0);
-
             const [endHours, endMinutes] = endTime.value.split(':');
             parsedEndDate.setHours(parseInt(endHours), parseInt(endMinutes), 0, 0);
 
@@ -108,18 +103,17 @@ const validate = () => {
         <form @submit.prevent="validate">
             <div class="item">
                 <h2>Select the rental period</h2>
-                <!-- Configurer pour la sélection de la plage de dates -->
                 <DatePicker transparent borderless is-dark="{ selector: ':root', darkClass: 'dark' }"
                     v-model="dateRange" :min-date="minDate" :max-date="maxDate" :attributes="attributes" is-range />
             </div>
-            <div class="item">
+            <!-- <div class="item">
                 <h2>Start time</h2>
                 <input type="time" required v-model="beginningTime" />
-            </div>
-            <div class="item">
+            </div> -->
+            <!-- <div class="item">
                 <h2>End time</h2>
                 <input type="time" required v-model="endTime" />
-            </div>
+            </div> -->
             <input type="submit" value="Validate the rental" />
         </form>
         <div v-if="message" class="api-message">{{ message }}</div>

@@ -37,7 +37,7 @@ if (token) {
             myData.value = data;
             url.value = data.urls;
             price.value = data.prices;
-            btcAdress.value = data.btc;
+            // btcAdress.value = data.btc;
             btcRent.value = data.btcRent;
 
             // Ici, nous appelons stateChecker avec les bonnes valeurs directement après avoir mis à jour les autres valeurs.
@@ -175,11 +175,11 @@ authStore.authChecker();
                         <input type="text" id="price" v-model="price" required >
 
                     </div>
-                    <div class="item" >
+                    <!-- <div class="item" >
                         <label for="price">Bitcoin payment address</label>
                         <input type="text" id="btcAdress" v-model="btcAdress" required >
 
-                    </div>
+                    </div> -->
 
                 </div>
 
