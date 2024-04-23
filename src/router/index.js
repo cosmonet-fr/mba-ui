@@ -12,6 +12,7 @@ import MyShoppingList from '../views/MyShoppingList.vue'
 import Buy from '../views/Buy.vue'
 import BannerEdit from '../views/BannerEdit.vue'
 import RentThis from '../views/RentThis.vue'
+import MyRent from '../views/MyRent.vue'
 import MyPixelEditRent from '../views/MyPixelEditRent.vue'
 import Contact from '../views/Contact.vue'
 import LegalNotice from '../views/LegalNotice.vue'
@@ -95,10 +96,15 @@ const router = createRouter({
 
     },
     {
-      path: '/rent/:pixelId',
+      path: '/rent/:pixelId/:price',
       name: 'rent',
       component: RentThis
 
+    },
+    {
+      path: '/my-rent',
+      name: 'my-rent',
+      component: MyRent
     },
     {
       path: '/my-pixels/rent/:id',

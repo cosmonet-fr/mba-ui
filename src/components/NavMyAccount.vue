@@ -8,6 +8,7 @@
         <RouterLink to="/my-pixels" class="myMenu">My Pixels</RouterLink>
         <RouterLink to="/my-sales" class="myMenu">My Sales</RouterLink>
         <RouterLink to="/my-shopping-list" class="myMenu">Shop List</RouterLink>
+        <RouterLink to="/my-rent" class="myMenu">My Rentals</RouterLink>
     </nav>
 
 </template>

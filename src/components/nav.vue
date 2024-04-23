@@ -69,24 +69,24 @@ function handleIconClick() {
 </script>
 
 <template>
-    <DropDown v-show="dropdownFunctions.dropDown"></DropDown>
-    <DropDownUser v-if="dropdownFunctions.dropDownUser"></DropDownUser>
-    <nav>
-      <div class="pixels" v-for="(pixel, index) in pixels" :key="index" :class="{ added: isPixelInCart(pixel.numbers) }"
+  <DropDown v-show="dropdownFunctions.dropDown"></DropDown>
+  <DropDownUser v-if="dropdownFunctions.dropDownUser"></DropDownUser>
+  <nav>
+    <div class="pixels" v-for="(pixel, index) in pixels" :key="index" :class="{ added: isPixelInCart(pixel.numbers) }"
       :style="{
         background: getBackgroundColor(pixel)
-      }" @click="selectPix(pixel)"
-        >
-        <img v-if="pixel.icons !== null" :src="pixel.icons" :alt="pixel.numbers">
-        <!-- <img v-else src="@/assets/cadre.webp" alt="cadre"> -->
-        <img v-else class="dotted" src="@/assets/dotted.svg" alt="cadre">
+      }" @click="selectPix(pixel)">
+      <img v-if="pixel.icons !== null" :src="pixel.icons" :alt="pixel.numbers">
+      <!-- <img v-else src="@/assets/cadre.webp" alt="cadre"> -->
+      <img v-else class="dotted" src="@/assets/dotted.svg" alt="cadre">
 
-        <!-- <p v-if="pixel.forSale && !pixel.transactionInProgress" > For <br> Sale </p> -->
-      </div>
-      <div class="pixels pixels-menu" ></div>
-      <div class="pixels pixels-menu" @click="handleUserIconClick"><img src="@/assets/user-solid.svg" alt=""></div>
-      <div class="pixels pixels-menu" @click="handleIconClick"><img src="@/assets/bars-solid.svg" alt=""></div>
-    </nav>
+      <!-- <p v-if="pixel.forSale && !pixel.transactionInProgress" > For <br> Sale </p> -->
+    </div>
+    <div class="pixels pixels-menu" @click="handleUserIconClick"><img src="@/assets/user-solid.svg" alt=""></div>
+    <div class="pixels pixels-menu"><img src="@/assets/filter-solid.svg" alt=""></div>
+    <div class="pixels pixels-menu"><img src="@/assets/newspaper-regular.svg" alt=""></div>
+    <div class="pixels pixels-menu" @click="handleIconClick"><img src="@/assets/bars-solid.svg" alt=""></div>
+  </nav>
 
 </template>
 

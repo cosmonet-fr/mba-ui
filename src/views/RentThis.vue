@@ -26,6 +26,7 @@ const convertDatesFromAPI = (dates) => {
 };
 
 const message = ref('');
+const price = ref(route.params.price);
 
 // Récupération des dates réservées depuis l'API
 const fetchReservedDates = async () => {
@@ -58,6 +59,19 @@ const idUser = sessionStorage.getItem('id');
 const dateRange = ref({ start: null, end: null });
 const beginningTime = ref('00:00');
 const endTime = ref('23:59');
+
+// Calcul du nombre de jours sélectionnés
+const daysCount = computed(() => {
+    if (dateRange.value.start && dateRange.value.end) {
+        const diff = new Date(dateRange.value.end).getTime() - new Date(dateRange.value.start).getTime();
+        return diff / (1000 * 3600 * 24) + 1; // Inclut le jour de début dans le comptage
+    }
+    return 0;
+});
+
+
+// Calcul du prix total
+const totalPrice = computed(() => price.value * daysCount.value);
 
 const validate = () => {
     if (dateRange.value.start && beginningTime.value && dateRange.value.end && endTime.value) {
@@ -101,6 +115,8 @@ const validate = () => {
     <div class="page">
         <h1>Rent a plot</h1>
         <form @submit.prevent="validate">
+            <p>Price of the day: {{ price }} STSH</p>
+            <p>Total price: {{ totalPrice }} STSH</p>
             <div class="item">
                 <h2>Select the rental period</h2>
                 <DatePicker transparent borderless is-dark="{ selector: ':root', darkClass: 'dark' }"

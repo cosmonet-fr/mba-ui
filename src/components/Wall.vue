@@ -41,7 +41,7 @@ function selectPix(pixel) {
     } else if (pixel.forSale == 0 && pixel.urls != null && !pixel.forRent) {
       window.location.href = pixel.urls;
     } else if (pixel.forSale == 0 && pixel.urls == null && pixel.forRent) {
-      router.push(`/rent/${pixel.numbers}`)
+      router.push(`/rent/${pixel.numbers}/${pixel.prices}`)
     } else if (pixel.forSale == 0 && pixel.urls != null && pixel.forRent) {
       // Modal
       getChois(pixel)
@@ -57,7 +57,7 @@ function getChois(pixel) {
 }
 
 function rentPlot() {
-  router.push(`/rent/${modalPixel.value.numbers}`);
+  router.push(`/rent/${modalPixel.value.numbers}/${modalPixel.value.prices}`);
   showModal.value = false;
 }
 

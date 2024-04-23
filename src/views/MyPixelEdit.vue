@@ -137,44 +137,46 @@ authStore.authChecker();
                     <label for="icon">Icon Image</label>
                     <input type="file" id="icon" @change="handleFileUpload">
                 </div>
-                <div class="item" >
+                <div class="item">
                     <label>Link</label>
-                    <input type="text" name="url" id="url" placeholder="https://..." v-model="url"/>
+                    <input type="text" name="url" id="url" placeholder="https://..." v-model="url" />
 
                 </div>
                 <!-- <div class="item" v-if="upForSale" >
                     <label for="forSale" >Is for sale ?</label>
                     <input id="forSale" type="checkbox" v-model="forSale">
                 </div> -->
-                <div v-if="upForSale" >
-                    <div class="item" >
+                <div v-if="upForSale">
+                    <div class="item">
                         <input type="radio" id="radio1" name="nade" value="nade" v-model="state" checked />
                         <label for="radio1">I do not want to sell or rent my pixel.</label>
 
                     </div>
-                    <div class="item" >
+                    <div class="item">
                         <input type="radio" id="radio2" name="forSale" value="forSale" v-model="state" />
                         <label for="radio2">Put my pixel up for sale.</label>
 
                     </div>
-                    <div class="item" >
+                    <div class="item">
                         <input type="radio" id="radio3" name="forRent" value="forRent" v-model="state" />
                         <label for="radio3">Rent my pixel.</label>
 
                     </div>
 
                 </div>
-                <div v-else >
+                <div v-else>
                     <p class="err">
-                        The sale of pixels in the secondary market is not yet available in the alpha 1 version of the application.
+                        The sale of pixels in the secondary market is not yet available in the alpha 1 version of the
+                        application.
                     </p>
                 </div>
-                <div v-if="state === 'forSale'" >
-                    <div class="item" >
+                <div v-if="state === 'forSale'">
+                    <div class="item">
                         <label for="price">Price</label>
-                        <input type="text" id="price" v-model="price" required >
+                        <input type="text" id="price" v-model="price" required>
 
                     </div>
+                    <p>Prices are in satoshi (STSH). 1 bitcoin (BTC) = 100000000 STSH</p>
                     <!-- <div class="item" >
                         <label for="price">Bitcoin payment address</label>
                         <input type="text" id="btcAdress" v-model="btcAdress" required >
@@ -183,22 +185,23 @@ authStore.authChecker();
 
                 </div>
 
-                <div v-if="state === 'forRent'" >
-                    <div class="item" >
-                        <label for="price">Price</label>
-                        <input type="text" id="price" v-model="price" required >
+                <div v-if="state === 'forRent'">
+                    <div class="item">
+                        <label for="price">Price per day</label>
+                        <input type="text" id="price" v-model="price" required>
 
                     </div>
-                    <div class="item" >
+                    <p>Prices are in satoshi (STSH). 1 bitcoin (BTC) = 100000000 STSH</p>
+                    <!-- <div class="item" >
                         <label for="price">Bitcoin payment address</label>
                         <input type="text" id="btcAdress" v-model="btcRent" required >
 
-                    </div>
+                    </div> -->
 
                 </div>
                 <input type="submit" value="Update" />
                 <div v-if="message">
-                    {{ message }} 
+                    {{ message }}
                 </div>
 
 
