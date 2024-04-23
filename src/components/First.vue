@@ -17,16 +17,17 @@ function handleDoNotShowAgain() {
 }
 </script>
 <template>
-    <div class="modal_contenaire" v-if="showModal" >
-        <div class="modal" >
+    <div class="modal_contenaire" v-if="showModal">
+        <div class="modal">
             <h1>
                 Is this your first visit? Welcome!
             </h1>
             <p>
-                Here, you can buy pixel parcels on the primary market or, buy and sell on the secondary market. Each parcel you purchase allows you to display an image with a hyperlink. Additionally, by buying during the Alpha version, you'll get a discount on future versions: 10% for Beta and 5% for the 1.0 version. Transactions are made in bitcoins.
+                Here, you can buy pixel parcels on the primary market or, buy and sell on the secondary market. Each
+                parcel you purchase allows you to display an image with a hyperlink. Transactions are made in bitcoins.
             </p>
-            <div class="item" >
-                <div class="pixels for_sale" >
+            <div class="item">
+                <div class="pixels for_sale">
                     <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
                 </div>
                 <p>
@@ -34,37 +35,46 @@ function handleDoNotShowAgain() {
                 </p>
 
             </div>
-                <div class="item" >
-                    <div class="pixels" >
-                        <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
-                    </div>
-                    <p>
-                        parcel of pixels already sold
-                    </p>
-
+            <div class="item">
+                <div class="pixels">
+                    <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
                 </div>
-                <div class="item" >
-                    <div class="pixels for_sale2" >
-                        <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
-                    </div>
-                    <p>
-                        parcel of pixels for sale in the secondary market (unavailable at the moment)
-                    </p>
+                <p>
+                    parcel of pixels already sold
+                </p>
 
+            </div>
+            <div class="item">
+                <div class="pixels for_sale2">
+                    <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
                 </div>
-                    <div class="item" >
-                        <div class="pixels in_progress" >
-                            <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
-                        </div>
-                        <p>
-                            sale in progress, impossible to buy
-                        </p>
+                <p>
+                    parcel of pixels for sale in the secondary market
+                </p>
 
-                    </div>
-                    <div class="validate" >
-                        <button @click="handleReopen">Reopen this window on my next visit</button>
-                        <button @click="handleDoNotShowAgain">Ok, don't show me this window again</button>
-                    </div>
+            </div>
+            <div class="item">
+                <div class="pixels in_progress">
+                    <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
+                </div>
+                <p>
+                    sale in progress, impossible to buy
+                </p>
+
+            </div>
+            <div class="item">
+                <div class="pixels for_rent">
+                    <img class="dotted" src="@/assets/dotted.svg" alt="cadre">
+                </div>
+                <p>
+                    plot of pixels available for rental
+                </p>
+
+            </div>
+            <div class="validate">
+                <button @click="handleReopen">Reopen this window on my next visit</button>
+                <button @click="handleDoNotShowAgain">Ok, don't show me this window again</button>
+            </div>
         </div>
 
     </div>
@@ -95,6 +105,9 @@ function handleDoNotShowAgain() {
     }
     .in_progress {
         background-color: #FDD835;
+    }
+    .for_rent {
+        background: #ff69b4;
     }
 }
 

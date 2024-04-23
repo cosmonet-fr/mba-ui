@@ -69,6 +69,7 @@ h1 {
   padding: 0;
   margin: 0;
   width: 100vw;
+  max-width: 98vw;
   @media (min-width: 600px) {
     display: flex;
     flex-direction: column;

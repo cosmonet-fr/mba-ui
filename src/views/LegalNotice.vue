@@ -35,43 +35,48 @@ fetch(`${import.meta.env.VITE_HOST_API}`)
 </script>
 
 <template>
-    
-    <Version v-if="redpill > 0"/>
-    <div class="page" >
-        <h1>Legal Notice</h1>
-	<div class="item" >
-	<h2>Author</h2>
-	<p>
-	      App published by Morphée213
-	      <RouterLink :to="{ name: 'contact' }">Contact here</RouterLink>
-	</p>
-	</div>
 
-        <div class="item" >
+    <Version v-if="redpill > 0" />
+    <div class="page">
+        <h1>Legal Notice</h1>
+        <div class="item">
+            <h2>Author</h2>
+            <p>
+                <ul>
+                    <li>App published by Morphée213</li>
+                    <li>SIRET: 75172755300024</li>
+                    <li>
+                    <RouterLink :to="{ name: 'contact' }">Contact here</RouterLink>
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="item">
             <h2>Hosting</h2>
             <ul>
-                <li>name:                     <span>OVH</span></li>
-                <li>address:                       <span>2 Rue Kellermann</span></li>
-                <li>city:                       <span>59100 ROUBAIX</span></li>
-                <li>country:                       <span>FR</span></li>
-                <li>phone:                         <span>+33.899701761</span></li>
-                <li>fax-no:                        <span>+33.320200958</span></li>
-                <li>e-mail:                        <span>support@ovh.net</span></li>
-                <li>website:                       <span>http://www.ovh.com</span></li>
+                <li>name: <span>OVH</span></li>
+                <li>address: <span>2 Rue Kellermann</span></li>
+                <li>city: <span>59100 ROUBAIX</span></li>
+                <li>country: <span>FR</span></li>
+                <li>phone: <span>+33.899701761</span></li>
+                <li>fax-no: <span>+33.320200958</span></li>
+                <li>e-mail: <span>support@ovh.net</span></li>
+                <li>website: <span>http://www.ovh.com</span></li>
 
             </ul>
         </div>
-        <div class="item" >
+        <div class="item">
             <h2>API infos</h2>
             <ul>
-                <li>version: <span @click="redpill ++" >{{ myData[0].version }}</span> </li>
-                <li>codename: <span @click="redpill ++" >{{ myData[0].codename }}</span> </li>
+                <li>version: <span @click="redpill ++">{{ myData[0].version }}</span> </li>
+                <li>codename: <span @click="redpill ++">{{ myData[0].codename }}</span> </li>
             </ul>
         </div>
-        <div class="item" >
+        <div class="item">
             <h2>APP / UI infos</h2>
             <ul>
-                <li>version: <span @click="redpill ++" >0.1.0A-3</span> </li>
+                <li>version: <span @click="redpill ++">0.1.0A-3</span> </li>
                 <li> <a href="https://github.com/cosmonet-fr/mba-ui/">source code</a> </li>
             </ul>
         </div>
