@@ -3,6 +3,9 @@ import { ref, computed } from 'vue';
 import { useRoute } from "vue-router";
 import { useCartStore } from '@/stores/cart';
 import { useAuthStore } from '@/stores/auth';
+import { usePixelsStore } from '@/stores/pixelsStore';
+
+const pixelsStore = usePixelsStore();
 
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -74,6 +77,8 @@ const sendDataToApi = () => {
                     amount: transaction.amountExpected
                 }));
                 cartStore.emptyCart();
+                pixelsStore.clearPixels();
+                pixelsStore.loadPixels();
             })
             .catch(error => {
                 console.error('Error fetching user:', error);

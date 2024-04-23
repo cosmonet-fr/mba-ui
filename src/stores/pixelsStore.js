@@ -4,7 +4,8 @@ export const usePixelsStore = defineStore('pixels', {
     state: () => ({
         pixels: [],
         currentPage: 1,
-        isLoading: false
+        isLoading: false,
+        loadingPage: true
     }),
     actions: {
         loadPixels() {
@@ -14,6 +15,7 @@ export const usePixelsStore = defineStore('pixels', {
                 .then(data => {
                     this.pixels = [...this.pixels, ...data];
                     this.isLoading = false;
+                    this.loadingPage = false;
                 })
                 .catch(error => {
                     console.error('Error fetching pixels:', error);
@@ -25,6 +27,9 @@ export const usePixelsStore = defineStore('pixels', {
                 this.currentPage++;
                 this.loadPixels();
             }
+        },
+        clearPixels() {
+            this.pixels = [];
         }
     }
 });

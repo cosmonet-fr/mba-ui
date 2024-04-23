@@ -2,7 +2,9 @@
 import { ref, onMounted } from 'vue'
 import NavMyAccount from '../components/NavMyAccount.vue';
 import { useAuthStore } from '@/stores/auth'
+import { usePixelsStore } from '@/stores/pixelsStore';
 
+const pixelsStore = usePixelsStore();
 
 const authStore = useAuthStore();
 
@@ -57,6 +59,8 @@ const confirmOrCanceled = async (option, id, index) => {
         } else {
             myData.value[index].apiResponse = result.message;
         }
+        pixelsStore.clearPixels();
+        pixelsStore.loadPixels();
     } catch (error) {
         console.error('Error:', error);
         myData.value[index].apiResponse = "An error occurred.";

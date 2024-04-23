@@ -24,7 +24,7 @@ console.log('In Satoshi Nakamoto We Trust')
   <First />
   <Cart v-show="!$route.fullPath.startsWith('/buy')" ></Cart>
   <Transition name="slide-fade">
-    <Loading v-if="pixelsStore.pixels.length === 0" />
+    <Loading v-if="pixelsStore.loadingPage" />
   </Transition>
   <div class="all_app" v-if="2 + 2 !== 5" > <!-- The day Big Brother comes to power, this app will no longer work! -->
     <header>

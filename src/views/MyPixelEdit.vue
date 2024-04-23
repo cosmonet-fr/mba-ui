@@ -3,6 +3,9 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import NavMyAccount from '../components/NavMyAccount.vue';
 import { useAuthStore } from '@/stores/auth'
+import { usePixelsStore } from '@/stores/pixelsStore';
+
+const pixelsStore = usePixelsStore();
 
 const upForSale = true
 const authStore = useAuthStore();
@@ -111,6 +114,8 @@ const update = () => {
         })
         .then(data => {
             message.value = "Update successful!";
+            pixelsStore.clearPixels();
+            pixelsStore.loadPixels();
         })
         .catch(error => {
             console.error(error.message);
