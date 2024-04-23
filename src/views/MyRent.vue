@@ -6,7 +6,8 @@ import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore();
 
-const myData = ref([]);
+const inProgress = ref([]);
+const historical = ref([]);
 
 const idUser = sessionStorage.getItem('id')
 const token = sessionStorage.getItem('token')
@@ -19,13 +20,8 @@ if (token) {
     fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}`, { headers })
         .then(response => response.json())
         .then(data => {
-            // Convertir les valeurs de forSale en booléen et ajouter la propriété message
-            myData.value = data.map(item => ({
-                ...item,
-                forSale: item.forSale === 1 ? true : false,
-                message: "",
-                apiResponse: "" 
-            }))
+            inProgress.value = data.inProgress
+            historical.value = data.historical
         })
         .catch(error => {
             console.error('Error fetching user:', error)
@@ -47,16 +43,25 @@ const confirmOrCanceled = async (option, id, index) => {
             body: JSON.stringify({ locId: id })
         });
         const result = await response.json();
-        myData.value[index].apiResponse = result.message;
-
         if (response.ok) {
-            myData.value[index].status = option === 'confirm' ? 2 : 1; // Mettre à jour le statut
+            // Mettre à jour le statut localement et obtenir une copie de l'élément
+            const updatedStatus = option === 'confirm' ? 2 : 1;
+            const updatedItem = { ...inProgress.value[index], status: updatedStatus, apiResponse: result.message };
+
+            // Ajouter à historical
+            historical.value.push(updatedItem);
+
+            // Retirer de inProgress
+            inProgress.value.splice(index, 1);
+        } else {
+            myData.value[index].apiResponse = result.message;
         }
     } catch (error) {
         console.error('Error:', error);
         myData.value[index].apiResponse = "An error occurred.";
     }
 };
+
 
 const check = (address) => {
     window.open(`https://live.blockcypher.com/btc/address/${address}`, '_blank');
@@ -68,41 +73,46 @@ authStore.authChecker();
 <template>
     <NavMyAccount></NavMyAccount>
     <div class="page">
-        <!-- Affichage des ventes en cours -->
-        <div v-if="myData.length > 0">
-            <h2>Current sales:</h2>
-            <div v-for="(item, index) in myData" :key="index">
-                <div class="current" v-if="item.status === 0">
-                    <p>Pixels N° / <span v-for="id in item.pixelId">{{id}} / </span></p>
-                    <p>ID : {{ item.id }}</p>
-                    <p>Date : {{ formatDate(item.createdAt) }}</p>
-                    <p>Price : {{ item.amountExpected }} S</p>
-                    <p>Address : {{ item.btcAddress }}</p>
-                    <button @click="check(item.btcAddress)">
-                        Verify transaction on blockcypher
-                    </button>
-                    <!-- Afficher les boutons uniquement si la transaction est en attente -->
-                    <button v-if="!item.apiResponse" @click="confirmOrCanceled('confirm', item.id, index)">Confirm the
-                        transaction</button>
-                    <button v-if="!item.apiResponse" @click="confirmOrCanceled('cancel', item.id, index)">Cancel the
-                        transaction</button>
-                    <!-- Afficher le message de retour de l'API -->
-                    <p v-if="item.apiResponse">{{ item.apiResponse }}</p>
+
+        <div class="sale" v-if="inProgress.length > 0 || historical.length > 0">
+            <div class="inProgress" v-if="inProgress.length > 0">
+                <h1>Current sales:</h1>
+                <div v-for="(item, index) in inProgress" :key="index">
+                    <div class="current" v-if="item.status === 0">
+                        <p>
+                            Pixels N° {{ item.pixelID }}
+                        </p>
+                        <p>Date : {{ formatDate(item.createdAt) }}</p>
+                        <p>Price : {{ item.amountExpected }} STSH</p>
+                        <button @click="check(item.btcAddress)">
+                            Verify transaction on blockcypher
+                        </button>
+                        <button v-if="!item.apiResponse" @click="confirmOrCanceled('confirm', item.id, index)">Confirm
+                            the
+                            transaction</button>
+                        <button v-if="!item.apiResponse" @click="confirmOrCanceled('cancel', item.id, index)">Cancel the
+                            transaction</button>
+                        <p v-if="item.apiResponse">{{ item.apiResponse }}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="historical" v-if="historical.length > 0">
+                <h1>Sales history:</h1>
+                <div v-for="(item, index) in historical" :key="index">
+                    <div v-if="item.status !== 0">
+                        <p>{{ formatDate(item.createdAt) }} - {{ item.amountExpected }} S - <span
+                                v-if="item.status === 2" style="color: greenyellow;">Confirmed</span><span
+                                v-if="item.status === 1" style="color: red;">Canceled</span></p>
+                    </div>
                 </div>
             </div>
-            <!-- Historique des ventes -->
-            <h2>Sales history:</h2>
-            <div v-for="(item, index) in myData" :key="index">
-                <div v-if="item.status !== 0">
-                    <p>{{ formatDate(item.createdAt) }} - {{ item.amountExpected }} S - <span
-                            v-if="item.status === 2">Confirmed</span><span v-if="item.status === 1">Canceled</span></p>
-                </div>
-            </div>
+
         </div>
-        <!-- Message si aucune vente n'est enregistrée -->
         <div v-else>
             <h1>You haven't sold any pixels yet</h1>
         </div>
+
     </div>
 </template>
 

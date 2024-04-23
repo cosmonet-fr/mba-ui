@@ -3,10 +3,11 @@ import { ref, onMounted } from 'vue'
 import NavMyAccount from '../components/NavMyAccount.vue';
 import { useAuthStore } from '@/stores/auth'
 
-const history = ref(false)
+// const history = ref(false)
 const authStore = useAuthStore();
 
-const MyData = ref([]);
+const inProgress = ref([]);
+const historical = ref([]);
 
 const idUser = sessionStorage.getItem('id')
 const token = sessionStorage.getItem('token')
@@ -19,12 +20,9 @@ if (token) {
     fetch(`${import.meta.env.VITE_HOST_API}/transactions/shopping-list/${idUser}`, { headers })
         .then(response => response.json())
         .then(data => {
-            // Convertir les valeurs de forSale en booléen et ajouter la propriété message
-            MyData.value = data.map(item => ({
-                ...item,
-                forSale: item.forSale === 1 ? true : false,
-                message: "" // Initialiser la propriété message à une chaîne vide
-            }))
+            inProgress.value = data.inProgress
+            historical.value = data.historical
+
         })
         .catch(error => {
             console.error('Error fetching user:', error)
@@ -39,31 +37,38 @@ authStore.authChecker();
 </script>
 <template>
     <NavMyAccount></NavMyAccount>
-    <div class="page" >
-        <div v-if="MyData.length > 0" >
-            <div v-show="!history" >
+    <div class="page">
+        <div class="shop" v-if="inProgress.length > 0 || historical.length > 0">
+            <div class="inProgress" v-if="inProgress.length > 0">
                 <h1>Purchase in progress</h1>
-                <div v-for="item in MyData" >
-                    <div v-if="item.status == 0" >
-                        <p>
-                            You have started purchasing pixel {{ item.pixelId }}, send {{ item.amountExpected }} STSH to the address <em>{{ item.btcAddress }}</em> to finalize your purchase.
-                        </p>
-                    </div>
+                <div v-for="itemInProgress in inProgress">
+                    <p>
+                        You have started purchasing pixel plots :
+                    <ul>
+                        <li v-for="pixel in itemInProgress.pixelId">{{ pixel }}</li>
+                    </ul>
+                    Send {{
+                    itemInProgress.amountExpected }} STSH
+                    to
+                    the address: <em>{{ itemInProgress.btcAddress }}</em> to finalize your purchase.
+                    </p>
+
                 </div>
-                <button @click="history = !history" >see history</button>
 
             </div>
-            <div v-show="history" >
+            <div class="historical" v-if="historical.length > 0">
                 <h1>Past purchase</h1>
-                <div v-for="item in MyData" >
-                    <div v-if="item.status != 0" >
-                        <p>{{ formatDate(item.createdAt) }} {{ item.amountExpected }} S <span v-if="item.status == 2" >confirmed</span> <span v-if="item.status == 1" >canceled</span> </p>
-                    </div>
+                <div v-for="itemHistorical in historical">
+                    <p>{{ formatDate(itemHistorical.createdAt) }} {{ itemHistorical.amountExpected }} STSH <span
+                            style="color: greenyellow;" v-if="itemHistorical.status == 2">confirmed</span>
+                        <span style="color: red;" v-if="itemHistorical.status == 1">canceled</span>
+                    </p>
                 </div>
-                <button @click="history = !history" >view current transactions</button>
+
             </div>
+
         </div>
-        <div v-else >
+        <div v-else>
             <h1>You haven't purchased pixels yet</h1>
         </div>
     </div>
@@ -76,6 +81,13 @@ p {
     em {
         font-weight: bold;
         color: #2094f0;
+        font-size: .8rem;
     }
+}
+.shop {
+    min-height: 100vh;
+}
+li {
+    list-style: inside;
 }
 </style>
