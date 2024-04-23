@@ -36,8 +36,6 @@ if (token) {
             myData.value = data;
             url.value = data.urls;
             price.value = data.prices;
-            btcAdress.value = data.btc;
-            btcRent.value = data.btcRent;
 
             // Ici, nous appelons stateChecker avec les bonnes valeurs directement après avoir mis à jour les autres valeurs.
             stateChecker(data.forSale, data.forRent);
@@ -47,38 +45,12 @@ if (token) {
         });
 }
 
-// Fonction pour vérifier l'état du pixel
-const stateChecker = (sale, rent) => {
-    if (sale == 1 && rent == 0) {
-        state.value = 'forSale'
-    } else if (sale == 0 && rent == 1) {
-        state.value = 'forRent'
-    } else {
-        state.value = 'nada'
-    }
-
-}
 
 // Fonction pour gérer la mise à jour
 const update = () => {
-    let forSale
-    let forRent
-    if (state.value === 'forSale') {
-        forSale = 1;
-        forRent = 0;
-    } else if (state.value === 'forRent') {
-        forSale = 0;
-        forRent = 1; 
-    } else {
-        forSale = 0;
-        forRent = 0; 
-    }
     const formData = new FormData();
 
     // Ajouter les champs, sauf s'ils sont null
-    if (price.value !== null) formData.append("newPrice", price.value);
-    formData.append("forSale", forSale);
-    formData.append("forRent", forRent);
     if (url.value !== null) formData.append("newUrl", url.value);
     if (btcAdress.value !== null) formData.append("btc", btcAdress.value);
     if (btcRent.value !== null) formData.append("btcRent", btcRent.value);
@@ -136,63 +108,9 @@ authStore.authChecker();
                 </div>
                 <div class="item" >
                     <label>Link</label>
-                    <input type="text" name="url" id="url" placeholder="https://..." v-model="url"/>
+                    <input type="url" name="url" id="url" placeholder="https://..." v-model="url"/>
 
                 </div>
-                <!-- <div class="item" v-if="upForSale" >
-                    <label for="forSale" >Is for sale ?</label>
-                    <input id="forSale" type="checkbox" v-model="forSale">
-                </div> -->
-                <!-- <div v-if="upForSale" >
-                    <div class="item" >
-                        <input type="radio" id="radio1" name="nade" value="nade" v-model="state" checked />
-                        <label for="radio1">I do not want to sell or rent my pixel.</label>
-
-                    </div>
-                    <div class="item" >
-                        <input type="radio" id="radio2" name="forSale" value="forSale" v-model="state" />
-                        <label for="radio2">Put my pixel up for sale.</label>
-
-                    </div>
-                    <div class="item" >
-                        <input type="radio" id="radio3" name="forRent" value="forRent" v-model="state" />
-                        <label for="radio3">Rent my pixel.</label>
-
-                    </div>
-
-                </div>
-                <div v-else >
-                    <p class="err">
-                        The sale of pixels in the secondary market is not yet available in the alpha 1 version of the application.
-                    </p>
-                </div>
-                <div v-if="state === 'forSale'" >
-                    <div class="item" >
-                        <label for="price">Price</label>
-                        <input type="text" id="price" v-model="price" required >
-
-                    </div>
-                    <div class="item" >
-                        <label for="price">Bitcoin payment address</label>
-                        <input type="text" id="btcAdress" v-model="btcAdress" required >
-
-                    </div>
-
-                </div>
-
-                <div v-if="state === 'forRent'" >
-                    <div class="item" >
-                        <label for="price">Price</label>
-                        <input type="text" id="price" v-model="price" required >
-
-                    </div>
-                    <div class="item" >
-                        <label for="price">Bitcoin payment address</label>
-                        <input type="text" id="btcAdress" v-model="btcRent" required >
-
-                    </div>
-
-                </div> -->
                 <input type="submit" value="Update" />
                 <div v-if="message">
                     {{ message }} 

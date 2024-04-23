@@ -139,7 +139,7 @@ authStore.authChecker();
                 </div>
                 <div class="item">
                     <label>Link</label>
-                    <input type="text" name="url" id="url" placeholder="https://..." v-model="url" />
+                    <input type="url" name="url" id="url" placeholder="https://..." v-model="url" />
 
                 </div>
                 <!-- <div class="item" v-if="upForSale" >
