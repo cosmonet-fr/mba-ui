@@ -109,7 +109,7 @@ function getBackgroundColor(pixel) {
       <p>
         This parcel of pixels is for rent and offers a hyperlink. What do you want to do ?
       </p>
-      <div class="dashModal" >
+      <div class="dashModal">
         <button @click="visitLink">Visit the link</button>
         <button @click="rentPlot">Rent the plot</button>
       </div>
@@ -125,7 +125,7 @@ function getBackgroundColor(pixel) {
         <img v-else class="dotted" src="@/assets/dotted.svg" alt="cadre">
       </div>
     </div>
-    <LoadingMore ref="loadingMoreRef" />
+    <LoadingMore v-if="pixelsStore.isLoading && pixelsStore.hasMore" ref="loadingMoreRef" />
   </div>
 </template>
 
