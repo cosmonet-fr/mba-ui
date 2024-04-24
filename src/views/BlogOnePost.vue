@@ -31,9 +31,10 @@ onMounted(getpost);
       <div class="post">
         <p class="date">{{ date }}</p>
         <article>
-          <div v-html="post.content" class="postText" ></div>
+          <div v-html="post.content" class="postText"></div>
         </article>
       </div>
+      <p style="color: orange;" >Adding comments is not yet possible. But, it will soon be the case!</p>
     </div>
   </div>
 </template>

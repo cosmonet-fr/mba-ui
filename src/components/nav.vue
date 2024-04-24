@@ -87,10 +87,13 @@ function myAltert(text) {
     </div>
     <div class="pixels pixels-menu" @click="handleUserIconClick"><img src="@/assets/user-solid.svg" alt=""></div>
     <div class="pixels pixels-menu"
-      @click="myAltert('The filter feature is not yet available in the Alpha3 version. This feature allows you to filter the pixels according to their states (for sale, for rent, my pixels)')">
+      @click="myAltert('The filter feature is not yet available in the Alpha3 version. This feature allows you to filter the pixels according to their states (for sale, for rent, my pixels)')"
+      style="cursor: help;">
       <img src="@/assets/filter-solid-in.svg" alt="">
     </div>
-    <div class="pixels pixels-menu"><img src="@/assets/newspaper-regular.svg" alt=""></div>
+    <RouterLink to="/blog">
+      <div class="pixels pixels-menu"><img src="@/assets/newspaper-regular.svg" alt=""></div>
+    </RouterLink>
     <div class="pixels pixels-menu" @click="handleIconClick"><img src="@/assets/bars-solid.svg" alt=""></div>
   </nav>
 
