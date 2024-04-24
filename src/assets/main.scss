@@ -180,3 +180,15 @@ footer {
   transform: translateY(-100vh);
   // opacity: 0;
 }
+
+.postText {
+  p {
+    margin: 1em .5em;
+  }
+}
+
+.date {
+  padding: 1px;
+  font-size: .7rem;
+  text-align: right;
+}
