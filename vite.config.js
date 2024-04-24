@@ -10,7 +10,7 @@ export default defineConfig({
   ],
   server: {
     port: 8080,
-    host: false,
+    host: true,
     envPrefix: 'VITE_'
   },
   resolve: {

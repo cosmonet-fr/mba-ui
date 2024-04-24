@@ -15,17 +15,23 @@ const modalPixel = ref(null)
 const handleScroll = () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-  if (scrollTop + clientHeight >= scrollHeight - 15) { // Si proche du bas
+  // Augmenter le seuil pour un déclenchement plus précoce sur mobile
+  const threshold = Math.max(100, clientHeight * 0.5); // 10% de la hauteur visible
+
+  if (scrollTop + clientHeight >= scrollHeight - threshold) {
     pixelsStore.loadMorePixels();
   }
 };
 
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  window.addEventListener('touchmove', handleScroll);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('touchmove', handleScroll);
 });
 
 
