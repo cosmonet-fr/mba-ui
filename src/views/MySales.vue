@@ -22,12 +22,23 @@ if (token) {
     fetch(`${import.meta.env.VITE_HOST_API}/transactions/sales-list/${idUser}`, { headers })
         .then(response => response.json())
         .then(data => {
-            inProgress.value = data.inProgress
-            historical.value = data.historical
+            if (data.message && data.message === "No transactions found for the given user.") {
+                // Aucune transaction trouvée, initialiser les listes avec des tableaux vides
+                inProgress.value = [];
+                historical.value = [];
+            } else {
+                // Des transactions ont été trouvées, les assigner aux variables réactives
+                inProgress.value = data.inProgress || [];
+                historical.value = data.historical || [];
+            }
         })
         .catch(error => {
-            console.error('Error fetching user:', error)
-        })
+            console.error('Error fetching user:', error);
+            // En cas d'erreur de la requête, initialiser également avec des tableaux vides pour éviter les erreurs d'accès à des propriétés undefined
+            inProgress.value = [];
+            historical.value = [];
+        });
+
 }
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };

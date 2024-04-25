@@ -20,12 +20,20 @@ if (token) {
     fetch(`${import.meta.env.VITE_HOST_API}/loc/${idUser}`, { headers })
         .then(response => response.json())
         .then(data => {
-            inProgress.value = data.inProgress
-            historical.value = data.historical
+            if (data.message && data.message === "No periods found.") {
+                inProgress.value = [];
+                historical.value = [];
+            } else {
+                inProgress.value = data.inProgress || [];
+                historical.value = data.historical || [];
+            }
         })
         .catch(error => {
-            console.error('Error fetching user:', error)
-        })
+            console.error('Error fetching user:', error);
+            inProgress.value = [];
+            historical.value = [];
+        });
+
 }
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
